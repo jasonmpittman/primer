@@ -7,17 +7,15 @@ class MainForm(npyscreen.Form):
     def create(self):
       """
       y, x = self.useable_space()
-      self.myName        = self.add(npyscreen.TitleText, name='Name')
-      self.myDepartment  = self.add(npyscreen.TitleMultiSelect, scroll_exit=True, max_height=3, name='Department', values = ['Department 1', 'Department 2', 'Department 3'])
       
       obj = self.add(npyscreen.BoxTitle, name="BoxTitle",
             custom_highlighting=True, scroll_exit = True, values=["first line", "second line"],
             rely=y // 3, max_width=x // 2 - 5, max_height=y // 1)
       """
       y, x = self.useable_space()
-      obj = self.add(npyscreen.BoxTitle, name="BoxTitle",
-              custom_highlighting=True, values=["first line", "second line"],
-              rely=y // 4, max_width=x // 2 - 5, max_height=y // 2)
+      obj = self.add(npyscreen.BoxTitle, name="Honeypot",
+              custom_highlighting=True, scroll_exit = True, values=["first line", "second line"],
+              max_width=x // 2 - 5)
       self.add(InputBox, name="Boxed MultiLineEdit", footer="footer",
               relx=x // 2, rely=2)
 
