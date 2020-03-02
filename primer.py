@@ -7,11 +7,11 @@ class MainForm(npyscreen.FormWithMenus):
 
   def afterEditing(self):
     #store values of the form
-    self.parentApp.selectedServices = self.serviceBox.value
-    self.parentApp.honeypotInfo = self.honeypotInfoBox.value
+    self.parentApp.selectedServices = self.serviceBox.get_selected_objects()     
+    self.parentApp.honeypotInfo = self.honeypotInfoBox.values
     f = open("demofile2.txt", "a")
-    f.write(str(self.serviceBox.value))
-    f.write(str(self.honeypotInfoBox.value))
+    f.write(str(self.serviceBox.get_selected_objects()))
+    f.write(str(self.honeypotInfoBox.values))
     f.close()
     #here is where we would store all the information about the values selected/input
     #build the string or whatever, and then store it, and then run it against the honeypot
@@ -53,7 +53,7 @@ class PcapForm(npyscreen.Form):
 
 #Parent Class that controls the application with form data, etc
 class Primer(npyscreen.NPSAppManaged):
-  selectedServices, honeypotInfo, pcaps = None, None, None
+  selectedServices, honeypotIP, pcaps = None, None, None
   def onStart(self):
     #add the forms we need
     self.addForm('MAIN', MainForm, name='PRIMER')
