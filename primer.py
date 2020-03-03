@@ -23,9 +23,6 @@ class MainForm(npyscreen.FormWithMenus):
     self.honeypotInfoBox = self.add(npyscreen.MultiLineEditableBoxed, name="Honeypot",
             custom_highlighting=True, scroll_exit = True, values=["IP: ", "Port: ", "Type: "],
             max_width=x // 2 - 5)
-
-
-   
     #add the list of services, using the service object
     self.serviceBox = self.add(npyscreen.MultiSelect, name="Services", footer="footer", values = self.parentApp.services, scroll_exit = True,
             relx=x // 2, rely=2)  
@@ -35,22 +32,40 @@ class MainForm(npyscreen.FormWithMenus):
 class PcapForm(npyscreen.Form):
   #currently filled w dummy code
   def afterEditing(self):
-    self.parentApp.setNextForm(MainForm)
+    self.parentApp.setNextForm(None)
 
   def beforeEditing(self):
-    return
-
-  def create(self):
     for i in self.parentApp.selectedServices:
-      #go through all the selected services
-      #get the selected service from the map
-      self.add(npyscreen.TitleText, name=i)
-      self.add(npyscreen.MultiSelect, name="Services", footer="footer", values = self.parentApp.d.get(i), scroll_exit = True,
-            relx=x // 2, rely=2)  
       f = open("demofile2.txt", "a")
       f.write(str(i))
       f.write(str(self.parentApp.d.get(i)))
+      
+      #go through all the selected services
+      #get the selected service from the map
+      self.add(npyscreen.TitleText, name=i)
+      f.write("Title Text Created\n")
+      self.add(npyscreen.MultiSelect, name="Services", footer="footer", values = self.parentApp.d.get(i), scroll_exit = True)  
+      f.write("MultiSelect Created\n")
       f.close()
+    """
+    self.selectedServices = self.parentApp.selectedServices
+    self.dict = self.parentApp.d
+    for i in self.selectedServices:
+      #go through all the selected services
+      #get the selected service from the map
+      self.add(npyscreen.TitleText, name=i)
+      self.add(npyscreen.MultiSelect, name="Services", footer="footer", values = self.dict.get(i), scroll_exit = True,
+            relx=x // 2, rely=2)  
+      f = open("demofile2.txt", "a")
+      f.write(str(i))
+      f.write(str(self.dict.get(i)))
+      f.close()
+
+    """
+    return
+
+  def create(self):
+
 
 
     self.myName        = self.add(npyscreen.TitleText, name='Name')
@@ -100,7 +115,7 @@ class Primer(npyscreen.NPSAppManaged):
     #add the forms we need
     self.addForm('MAIN', MainForm, name='PRIMER')
     self.addForm('PCAP', PcapForm, name='PCAP')
-    self.addForm('RUN', RunForm, name = 'RUN')
+    #self.addForm('RUN', RunForm, name = 'RUN')
 
 
 #running the app

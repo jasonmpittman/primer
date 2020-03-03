@@ -1,2 +1,4 @@
 ssh,attack1.pcap,simplePingExclusive.pcap
 tcp,simplePingExclusive.pcap
+telnet,telnetAttack.pcap
+http,httpAttack.pcap
