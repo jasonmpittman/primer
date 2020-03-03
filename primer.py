@@ -7,6 +7,7 @@ class MainForm(npyscreen.FormWithMenus):
 
   def afterEditing(self):
     #store values of the form
+    #if selected services is empty bring up a popup - oops! select a service.
     self.parentApp.selectedServices = self.serviceBox.get_selected_objects()     
     self.parentApp.honeypotInfo = self.honeypotInfoBox.values
   #  f = open("debugging.txt", "a")
@@ -24,14 +25,20 @@ class MainForm(npyscreen.FormWithMenus):
             custom_highlighting = True, scroll_exit = True, values = ["IP: ", "Port: ", "Type: "],
             max_width = x // 2 - 5)
     #add the list of services, using the service object
-    self.serviceBox = self.add(npyscreen.MultiSelect, name = "Services", footer = "footer", values = self.parentApp.services, 
+    self.serviceBox = self.add(npyscreen.TitleMultiSelect, name = "Services", footer = "footer", values = self.parentApp.services, 
             scroll_exit = True, relx = x // 2, rely=2)  
 
 
 #The form that will display all the attacks associated with the service it is called from
-class PcapForm(npyscreen.Form):
+class PcapForm(npyscreen.ActionForm):
   #currently filled w dummy code
   def afterEditing(self):
+    self.parentApp.setNextForm(None)
+
+  def  on_cancel(self):
+    self.parentApp.switchForm('MAIN')
+
+  def on_ok(self):
     self.parentApp.setNextForm(None)
 
   def beforeEditing(self):
@@ -74,7 +81,7 @@ class PcapForm(npyscreen.Form):
       #get the selected service from the map
       self.add(npyscreen.TitleText, name=i)
       f.write("Title Text Created\n")
-      self.add(npyscreen.MultiSelect, name="Services", footer="footer", values = self.parentApp.d.get(i), scroll_exit = True)  
+      self.add(npyscreen.TitleMultiSelect, name=i, footer="footer", values = self.parentApp.d.get(i), scroll_exit = True)  
       f.write("MultiSelect Created\n")
       f.close()
 #The form that will display the pcaps selected as well as the ip address entered
@@ -117,7 +124,7 @@ class Primer(npyscreen.NPSAppManaged):
 
   def onStart(self):
     #add the forms we need
-    self.addForm('MAIN', MainForm, name='PRIMER')
+    self.addForm('MAIN', MainForm, name='MAIN')
     self.addForm('PCAP', PcapForm, name='PCAP')
     #self.addForm('RUN', RunForm, name = 'RUN')
 
