@@ -42,10 +42,17 @@ class PcapForm(npyscreen.Form):
 
   def create(self):
     for i in self.parentApp.selectedServices:
+      #go through all the selected services
+      #get the selected service from the map
+      self.add(npyscreen.TitleText, name=i)
+      self.add(npyscreen.MultiSelect, name="Services", footer="footer", values = self.parentApp.d.get(i), scroll_exit = True,
+            relx=x // 2, rely=2)  
       f = open("demofile2.txt", "a")
       f.write(str(i))
+      f.write(str(self.parentApp.d.get(i)))
       f.close()
-      self.add(npyscreen.TitleText, name=str(i))
+
+
     self.myName        = self.add(npyscreen.TitleText, name='Name')
     self.myDepartment  = self.add(npyscreen.TitleMultiSelect, scroll_exit=True, max_height=3, name='Department', values = ['Department 1', 'Department 2', 'Department 3'])
     self.myDate        = self.add(npyscreen.TitleDateCombo, name='Date Employed')
@@ -74,7 +81,21 @@ class Primer(npyscreen.NPSAppManaged):
   services = f.read().split(",")
   
   pcaps = os.listdir(path='pcap/')
-  
+
+  #Mapping to service -> pcap
+  d =  {
+  "service": ["example.pcap"]
+  }
+  d.clear()
+  f = open("config/mapping.csv", "r")
+  mappings = f.read().split("\n")
+
+  #Adding the dictionary Key (Service) to Values (Array of pcaps)
+  for y in mappings:
+    x = y.split(",")
+    d.update( {x[0] : x[1::]} )
+
+
   def onStart(self):
     #add the forms we need
     self.addForm('MAIN', MainForm, name='PRIMER')
