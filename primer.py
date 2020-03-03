@@ -9,7 +9,7 @@ class MainForm(npyscreen.FormWithMenus):
     #store values of the form
     self.parentApp.selectedServices = self.serviceBox.get_selected_objects()     
     self.parentApp.honeypotInfo = self.honeypotInfoBox.values
-  #  f = open("demofile2.txt", "a")
+  #  f = open("debugging.txt", "a")
   #  f.write(str(self.serviceBox.get_selected_objects()))
   #  f.write(str(self.honeypotInfoBox.values))
   #  f.close()
@@ -20,12 +20,12 @@ class MainForm(npyscreen.FormWithMenus):
   def create(self):
     y, x = self.useable_space()
     #create the honeypot form
-    self.honeypotInfoBox = self.add(npyscreen.MultiLineEditableBoxed, name="Honeypot",
-            custom_highlighting=True, scroll_exit = True, values=["IP: ", "Port: ", "Type: "],
-            max_width=x // 2 - 5)
+    self.honeypotInfoBox = self.add(npyscreen.MultiLineEditableBoxed, name = "Honeypot",
+            custom_highlighting = True, scroll_exit = True, values = ["IP: ", "Port: ", "Type: "],
+            max_width = x // 2 - 5)
     #add the list of services, using the service object
-    self.serviceBox = self.add(npyscreen.MultiSelect, name="Services", footer="footer", values = self.parentApp.services, scroll_exit = True,
-            relx=x // 2, rely=2)  
+    self.serviceBox = self.add(npyscreen.MultiSelect, name = "Services", footer = "footer", values = self.parentApp.services, 
+            scroll_exit = True, relx = x // 2, rely=2)  
 
 
 #The form that will display all the attacks associated with the service it is called from
@@ -36,7 +36,7 @@ class PcapForm(npyscreen.Form):
 
   def beforeEditing(self):
     for i in self.parentApp.selectedServices:
-      f = open("demofile2.txt", "a")
+      f = open("debugging.txt", "a")
       f.write(str(i))
       f.write(str(self.parentApp.d.get(i)))
       
@@ -56,7 +56,7 @@ class PcapForm(npyscreen.Form):
       self.add(npyscreen.TitleText, name=i)
       self.add(npyscreen.MultiSelect, name="Services", footer="footer", values = self.dict.get(i), scroll_exit = True,
             relx=x // 2, rely=2)  
-      f = open("demofile2.txt", "a")
+      f = open("debugging.txt", "a")
       f.write(str(i))
       f.write(str(self.dict.get(i)))
       f.close()
@@ -65,14 +65,18 @@ class PcapForm(npyscreen.Form):
     return
 
   def create(self):
-
-
-
-    self.myName        = self.add(npyscreen.TitleText, name='Name')
-    self.myDepartment  = self.add(npyscreen.TitleMultiSelect, scroll_exit=True, max_height=3, name='Department', values = ['Department 1', 'Department 2', 'Department 3'])
-    self.myDate        = self.add(npyscreen.TitleDateCombo, name='Date Employed')
-
-
+    for i in self.parentApp.selectedServices:
+      f = open("debugging.txt", "a")
+      f.write(str(i))
+      f.write(str(self.parentApp.d.get(i)))
+      
+      #go through all the selected services
+      #get the selected service from the map
+      self.add(npyscreen.TitleText, name=i)
+      f.write("Title Text Created\n")
+      self.add(npyscreen.MultiSelect, name="Services", footer="footer", values = self.parentApp.d.get(i), scroll_exit = True)  
+      f.write("MultiSelect Created\n")
+      f.close()
 #The form that will display the pcaps selected as well as the ip address entered
 class RunForm(npyscreen.Form):
   def afterEditing(self):
