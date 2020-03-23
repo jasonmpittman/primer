@@ -24,4 +24,5 @@ tcp['simplePingExclusive.pcap']Title Text Created
 MultiSelect Created
 ssh['attack1.pcap', 'simplePingExclusive.pcap']Title Text Created
 MultiSelect Created
-tcp['simplePingExclusive.pcap']
+tcp['simplePingExclusive.pcap']telnet['telnetAttack.pcap']Title Text Created
+MultiSelect Created

@@ -25,8 +25,17 @@ class MainForm(npyscreen.FormWithMenus):
             custom_highlighting = True, scroll_exit = True, values = ["IP: ", "Port: ", "Type: "],
             max_width = x // 2 - 5)
     #add the list of services, using the service object
-    self.serviceBox = self.add(npyscreen.TitleMultiSelect, name = "Services", footer = "footer", values = self.parentApp.services, 
-            scroll_exit = True, relx = x // 2, rely=2)  
+    #self.serviceBox = self.add(npyscreen.TitleMultiSelect, name = "Services", footer = "footer", values = self.parentApp.services, 
+    #        scroll_exit = True, relx = x // 2, rely=2)  
+
+    wgtree = self.add(npyscreen.MLTreeMultiSelect)
+    treedata = npyscreen.TreeData(content='Root', selectable=True, ignore_root=True, scroll_exit = True, relx = x // 2, rely=2)
+    for x in self.parentApp.services:
+      child = treedata.new_child(content=x, selectable=True)
+      for pcap in self.parentApp.d.get(i):
+        grandchild = child.new_child(content=pcap, selectable=True)
+
+
 
 
 #The form that will display all the attacks associated with the service it is called from
@@ -52,6 +61,7 @@ class PcapForm(npyscreen.ActionForm):
       self.add(npyscreen.TitleText, name=i)
       f.write("Title Text Created\n")
       self.add(npyscreen.MultiSelect, name="Services", footer="footer", values = self.parentApp.d.get(i), scroll_exit = True)  
+
       f.write("MultiSelect Created\n")
       f.close()
     """

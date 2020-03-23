@@ -1,5 +1,8 @@
 from tkinter import *
+from tkinter import ttk
 import os 
+import socket
+import netifaces as ni
 
 #if no display is found use :0.0
 if os.environ.get('DISPLAY','') == '':
@@ -30,6 +33,8 @@ for y in mappings:
   x = y.split(",")
   d.update( {x[0] : x[1::]} )
 
+#getting possible net interfaces for the current ip
+interfaces_list = ni.interfaces()
 
 root = Tk()
 frame_a = Frame()
@@ -54,6 +59,9 @@ l.pack()
 entry = Entry(master=frame_b, fg="yellow", bg="blue", width=50)
 entry.pack()
 
+interface = StringVar(root)
+interfaceMenu = ttk.Combobox(master=frame_b, textvariable=interface, values=interfaces_list)
+interfaceMenu.pack()
 
 def handle_click(event):
   #Mapping to service -> pcap
@@ -69,11 +77,14 @@ def handle_click(event):
         selected[service].append(pcap)
       pcapCount += 1
   honeypotIP = entry.get()
-  print(selected, honeypotIP)
+  interface = interfaceMenu.get()
+  print(selected, honeypotIP, interface)
 
 button = Button(master=frame_b, text="RUN")
+
 button.pack()
 button.bind("<Button-1>", handle_click)
+
 
 
 
@@ -82,7 +93,7 @@ frame_b.pack(fill=BOTH, side=RIGHT)
 root.mainloop()
 
 
-
+#sudo tcpreplay-edit -i (network socket) -S (previous source ip):(new source ip) -D (previous dest ip):(new dest ip) (name of pcap file to replay)
 # #store values of the form
 # #if selected services is empty bring up a popup - oops! select a service.
 # self.parentApp.selectedServices = self.serviceBox.get_selected_objects()     
