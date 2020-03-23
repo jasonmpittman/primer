@@ -3,6 +3,9 @@ from tkinter import ttk
 import os 
 import socket
 import netifaces as ni
+import logging
+import time
+import subprocess
 
 #if no display is found use :0.0
 if os.environ.get('DISPLAY','') == '':
@@ -13,6 +16,8 @@ if os.environ.get('DISPLAY','') == '':
 #BEFORE MAKING WINDOW -- LOOK INTO FILESYSTEM AND GRAB DATA
 selectedServices = []
 honeypotIP, pcaps = None, None
+PREVIOUS_SOURCE_IP = "172.16.0.137"
+PREVIOUS_DESTINATION_IP = "172.16.0.201"
 #read in the config file for the service list
 f = open("config/services.csv", "r")
 services = f.read().split(",")
@@ -64,21 +69,33 @@ interfaceMenu = ttk.Combobox(master=frame_b, textvariable=interface, values=inte
 interfaceMenu.pack()
 
 def handle_click(event):
+  #set up the logger
+  logger = logging.getLogger(__name__)
+  logging.basicConfig(level = logging.INFO, filename = time.strftime("my-%Y-%m-%d.log"))
+
+
   #Mapping to service -> pcap
   selected =  {
   "service": ["example.pcap"]
   }
   selected.clear()  
+
+  #retrieve info from fields
+  honeypotIP = entry.get()
+  interface = interfaceMenu.get()
+  CURRENT_SOURCE_IP = ni.ifaddresses(interface)[ni.AF_INET][0]['addr']
   pcapCount = 0
   for service in d:
     selected[service] = []
     for pcap in d[service]:
       if(selectedPcaps[pcapCount].get() == 1):
         selected[service].append(pcap)
+        command = "sudo tcpreplay-edit -i " + interface + " -S "  + PREVIOUS_SOURCE_IP + ":" + CURRENT_SOURCE_IP + " -D " + PREVIOUS_DESTINATION_IP + ":" + honeypotIP + " " + pcap
+        process = subprocess.check_output(['bash', '-c', command])
+        logging.info(command) 
       pcapCount += 1
-  honeypotIP = entry.get()
-  interface = interfaceMenu.get()
-  print(selected, honeypotIP, interface)
+
+  print(command)
 
 button = Button(master=frame_b, text="RUN")
 
