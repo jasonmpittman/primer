@@ -42,38 +42,48 @@ for y in mappings:
 interfaces_list = ni.interfaces()
 
 root = Tk()
-frame_a = Frame()
-frame_b = Frame()
 
-serviceCounter = 0
+l = Label(master=root, text="Select a PCAP to run:", font='Helvetica 12 bold')
+l.grid(row=0, column=0)
+counter = 1
 pcapCount = 0
 selectedServices = []
 selectedPcaps = []
 for service in d:
-  l = Label(master=frame_a, text=service)
-  l.pack()
+  l = Label(master=root, text=service, font='Helvetica 10 bold')
+  l.grid(row=counter, column=0)
   for pcap in d[service]:
     a = IntVar()
     selectedPcaps.append(a)
-    c = Checkbutton(master=frame_a, text=pcap, variable=selectedPcaps[pcapCount])
-    c.pack()
+    c = Checkbutton(master=root, text=pcap, variable=selectedPcaps[pcapCount])
+    c.grid(row=counter + 1, column=0)
     pcapCount += 1
+    counter += 1
+  counter += 1
 
-l = Label(master=frame_b, text="HONEYPOT IP:")
-l.pack()
-entry = Entry(master=frame_b, fg="yellow", bg="blue", width=50)
-entry.pack()
+l = Label(master=root, text="HONEYPOT IP:", font='Helvetica 12 bold')
+l.grid(row=0, column=2)
 
+entry = Entry(master=root, fg="yellow", bg="blue", width=30, font = 'Helvetica 10 bold')
+entry.grid(row=1, column=2)
+
+
+l = Label(master=root, text="Connection Interface:", font='Helvetica 12 bold')
+l.grid(row=0, column=4)
 interface = StringVar(root)
-interfaceMenu = ttk.Combobox(master=frame_b, textvariable=interface, values=interfaces_list)
-interfaceMenu.pack()
+interfaceMenu = ttk.Combobox(master=root, textvariable=interface, values=interfaces_list)
+interfaceMenu.grid(row=1, column=4)
 
-def handle_click(event):
+
+
+
+def handle_click():
   #set up the logger
   logger = logging.getLogger(__name__)
   logging.basicConfig(level = logging.INFO, filename = time.strftime("my-%Y-%m-%d.log"))
-
-
+  sys.stdout = open('logs/%Y-%m-%d-%s.log', 'w')
+  sys.stderr = open('logs/%Y-%m-%d-%s.log', 'w')
+  
   #Mapping to service -> pcap
   selected =  {
   "service": ["example.pcap"]
@@ -92,21 +102,11 @@ def handle_click(event):
         selected[service].append(pcap)
         command = "sudo tcpreplay-edit -i " + interface + " -S "  + PREVIOUS_SOURCE_IP + ":" + CURRENT_SOURCE_IP + " -D " + PREVIOUS_DESTINATION_IP + ":" + honeypotIP + " " + pcap
         process = subprocess.check_output(['bash', '-c', command])
-        logging.info(command) 
+        print(command)
       pcapCount += 1
 
-  print(command)
-
-button = Button(master=frame_b, text="RUN")
-
-button.pack()
-button.bind("<Button-1>", handle_click)
-
-
-
-
-frame_a.pack(fill=BOTH, side=LEFT)
-frame_b.pack(fill=BOTH, side=RIGHT)
+button = Button(master=root, text="RUN", command=handle_click)
+button.grid(row=4, column=2)
 root.mainloop()
 
 
