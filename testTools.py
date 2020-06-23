@@ -11,7 +11,7 @@ def getInterfaceList():
     return interfaces_list
 
 def getCurrentIP(interface):
-    return ni.ifaddresses('eth1')[ni.AF_INET][0]['addr']
+    return ni.ifaddresses(interface)[ni.AF_INET][0]['addr']
 
 #replace with dynamic pcap ip retrieval
 def getPreviousDestination(pcap):

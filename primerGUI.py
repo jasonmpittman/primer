@@ -47,13 +47,12 @@ def run():
   interfaceMenu = ttk.Combobox(master=root, textvariable=interface, values=interfaces_list)
   interfaceMenu.grid(row=1, column=4)
 
-  button = Button(master=root, text="RUN", command=handle_click(entry, interfaceMenu, d, selectedPcaps))
+  button = Button(master=root, text="RUN", command=lambda: handle_click(entry, interfaceMenu, d, selectedPcaps))
   button.grid(row=4, column=2)
   root.mainloop()
 
 def handle_click(entry, interfaceMenu, d, selectedPcaps):
   #Mapping to service -> pcap
-  print("here")
   selected =  {
     "service": ["example.pcap"]
   }
