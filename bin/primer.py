@@ -1,6 +1,10 @@
 import primerGUI as gui
+import logging
 
 def main():
+  #set up the logger
+  logFileName = 'logs/%Y-%m-%d-%s.log'
+  logging.basicConfig(filename=logFileName,level=logging.DEBUG)
   gui.run()
   # #BEFORE MAKING WINDOW -- LOOK INTO FILESYSTEM AND GRAB DATA
   # print("here")

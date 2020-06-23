@@ -23,6 +23,10 @@ def getServicePcapMap():
 
   return d
 
+def getPcaps():
+  #read in the pcaps
+  pcaps = os.listdir(path='pcap/')
+  return pcaps
 # mappings = getServicePcapMap()
 # honeypot = honeypot.Honeypot()
 # logger = logger.Logger()
