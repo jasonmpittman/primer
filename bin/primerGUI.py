@@ -83,9 +83,13 @@ def handle_click(entry, interfaceMenu, d, selectedPcaps):
         PREVIOUS_SOURCE_IP = testTools.getPreviousSource(pcap)
         PREVIOUS_DESTINATION_IP = testTools.getPreviousDestination(pcap)
         selected[service].append(pcap)
-        command = "sudo tcpreplay-edit -i " + interface + " -S "  + PREVIOUS_SOURCE_IP + ":" + CURRENT_SOURCE_IP + " -D " + PREVIOUS_DESTINATION_IP + ":" + honeypotIP + " pcap/" + pcap
+        command = "tcpreplay-edit -i " + interface + " -S "  + PREVIOUS_SOURCE_IP + ":" + CURRENT_SOURCE_IP + " -D " + PREVIOUS_DESTINATION_IP + ":" + honeypotIP + " ../pcap/" + pcap
         print(command)
         logging.info(command)
-        logging.info(subprocess.check_output(['bash', '-c', command]))
+        try:
+          output = subprocess.check_output(['bash', '-c', command])
+          logging.info(output)   
+        except subprocess.CalledProcessError as e:
+          raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
         print(command)
       pcapCount += 1
