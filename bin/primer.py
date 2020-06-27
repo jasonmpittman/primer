@@ -1,10 +1,13 @@
 import primerGUI as gui
 import logging
+import datetime
 
 def main():
   #set up the logger
-  logFileName = 'logs/%Y-%m-%d-%s.log'
-  logging.basicConfig(filename=logFileName,level=logging.DEBUG)
+  logFileName = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")+'.log'
+  logFilePath = '../logs/'+ logFileName
+  open(logFileName, 'w')
+  logging.basicConfig(filename=logFilePath,level=logging.DEBUG)
   gui.run()
   # #BEFORE MAKING WINDOW -- LOOK INTO FILESYSTEM AND GRAB DATA
   # print("here")

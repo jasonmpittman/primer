@@ -4,7 +4,7 @@
 
 def getServices():
   #read in the config file for the service list
-  f = open("config/services.csv", "r")
+  f = open("../config/services.csv", "r")
   services = f.read().split(",")
   return services
 
@@ -14,7 +14,7 @@ def getServicePcapMap():
   "service": ["example.pcap"]
   }
   d.clear()
-  file = open("config/mapping.csv", "r")
+  file = open("../config/mapping.csv", "r")
   mappings = file.read().split("\n")
   #Adding the dictionary Key (Service) to Values (Array of pcaps)
   for y in mappings:
