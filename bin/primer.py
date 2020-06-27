@@ -6,7 +6,7 @@ def main():
   #set up the logger
   logFileName = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")+'.log'
   logFilePath = '../logs/'+ logFileName
-  open(logFileName, 'w')
+  open(logFilePath, 'w')
   logging.basicConfig(filename=logFilePath,level=logging.DEBUG)
   gui.run()
   # #BEFORE MAKING WINDOW -- LOOK INTO FILESYSTEM AND GRAB DATA
