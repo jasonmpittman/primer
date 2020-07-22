@@ -60,6 +60,10 @@ def run():
   root.mainloop()
   logging.info('GUI launched successfully')
 
+
+
+  
+
 def handle_click(entry, interfaceMenu, d, selectedPcaps):
   #Mapping to service -> pcap
   selected =  {
@@ -67,29 +71,30 @@ def handle_click(entry, interfaceMenu, d, selectedPcaps):
   }
   selected.clear()
   #retrieve info from fields
-  honeypotIP = entry.get()
   primerFacade.honeypotIP = entry.get()
   interface = interfaceMenu.get()
   #get the current source IP from the testTools file
   CURRENT_SOURCE_IP = testTools.getCurrentIP(interface)
-  print(d)
+  print(d, interface)
   logging.info('running following services/pcaps:', selected)
-  pcapCount = 0
-  for service in d:
-    selected[service] = []
-    for pcap in d[service]:
-      print(pcap)
-      if(selectedPcaps[pcapCount].get() == 1):
-        PREVIOUS_SOURCE_IP = testTools.getPreviousSource(pcap)
-        PREVIOUS_DESTINATION_IP = testTools.getPreviousDestination(pcap)
-        selected[service].append(pcap)
-        command = "tcpreplay-edit -i " + interface + " -S "  + PREVIOUS_SOURCE_IP + ":" + CURRENT_SOURCE_IP + " -D " + PREVIOUS_DESTINATION_IP + ":" + honeypotIP + " ../pcap/" + pcap
-        print(command)
-        logging.info(command)
-        try:
-          output = subprocess.check_output(['bash', '-c', command])
-          logging.info(output)   
-        except subprocess.CalledProcessError as e:
-          raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
-        print(command)
-      pcapCount += 1
+
+  #run the selected Pcaps
+  primerFacade.runPcaps(d, interface, selected, selectedPcaps)
+  # for service in d:
+  #   selected[service] = []
+  #   for pcap in d[service]:
+  #     print(pcap)
+  #     if(selectedPcaps[pcapCount].get() == 1):
+  #       PREVIOUS_SOURCE_IP = testTools.getPreviousSource(pcap)
+  #       PREVIOUS_DESTINATION_IP = testTools.getPreviousDestination(pcap)
+  #       selected[service].append(pcap)
+  #       command = "tcpreplay-edit -i " + interface + " -S "  + PREVIOUS_SOURCE_IP + ":" + CURRENT_SOURCE_IP + " -D " + PREVIOUS_DESTINATION_IP + ":" + honeypotIP + " ../pcap/" + pcap
+  #       print(command)
+  #       logging.info(command)
+  #       try:
+  #         output = subprocess.check_output(['bash', '-c', command])
+  #         logging.info(output)   
+  #       except subprocess.CalledProcessError as e:
+  #         raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
+  #       print(command)
+  #     pcapCount += 1
