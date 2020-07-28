@@ -33,14 +33,17 @@ def getPcaps():
 # logger = logger.Logger()
 
 def runPcaps(d, interface, selected, selectedPcaps):
+  successFlag = True
   #get the current source IP from the testTools file
   CURRENT_SOURCE_IP = testTools.getCurrentIP(interface)
   pcapCount = 0
   for service in d:
     selected[service] = []
     for pcap in d[service]:
-      print(pcap)
+      #selected Pcaps is the entire lsit of pcaps
+      #.get() == 1 checks if the pcap is selected
       if(selectedPcaps[pcapCount].get() == 1):
+        logging.info("=========================================================================================\n RUNNING " + str(selectedPcaps[pcapCount]) + " \n")
         PREVIOUS_SOURCE_IP = testTools.getPreviousSource(pcap)
         PREVIOUS_DESTINATION_IP = testTools.getPreviousDestination(pcap)
         selected[service].append(pcap)
@@ -51,6 +54,9 @@ def runPcaps(d, interface, selected, selectedPcaps):
           output = subprocess.check_output(['bash', '-c', command])
           logging.info(output)   
         except subprocess.CalledProcessError as e:
-          raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
+          successFlag = False
+          logging.error(str(RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))))
+          #raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
+        logging.info("=========================================================================================\n")
       pcapCount += 1
-  return
+  return successFlag

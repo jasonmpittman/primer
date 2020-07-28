@@ -8,7 +8,7 @@ def main():
   logFilePath = '../logs/'+ logFileName
   open(logFilePath, 'w')
   logging.basicConfig(filename=logFilePath,level=logging.DEBUG)
-  gui.run()
+  gui.run(logFilePath)
   # #BEFORE MAKING WINDOW -- LOOK INTO FILESYSTEM AND GRAB DATA
   # print("here")
   # selectedServices = []

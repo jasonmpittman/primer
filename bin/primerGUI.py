@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import os
 import subprocess
 import primerFacade
@@ -10,7 +11,7 @@ import logging
 # import honeypot as honeypot
 # import testTools as tools
 # import logging as logging
-def run():
+def run(logFile):
   #if no display is found use :0.0
   if os.environ.get('DISPLAY','') == '':
     os.environ.__setitem__('DISPLAY', ':0.0')
@@ -55,7 +56,7 @@ def run():
   interfaceMenu = ttk.Combobox(master=root, textvariable=interface, values=interfaces_list)
   interfaceMenu.grid(row=1, column=4)
 
-  button = Button(master=root, text="RUN", command=lambda: handle_click(entry, interfaceMenu, d, selectedPcaps))
+  button = Button(master=root, text="RUN", command=lambda: handle_click(root, entry, interfaceMenu, d, selectedPcaps, logFile))
   button.grid(row=4, column=2)
   root.mainloop()
   logging.info('GUI launched successfully')
@@ -64,7 +65,7 @@ def run():
 
   
 
-def handle_click(entry, interfaceMenu, d, selectedPcaps):
+def handle_click(root, entry, interfaceMenu, d, selectedPcaps, logFile):
   #Mapping to service -> pcap
   selected =  {
     "service": ["example.pcap"]
@@ -76,25 +77,13 @@ def handle_click(entry, interfaceMenu, d, selectedPcaps):
   #get the current source IP from the testTools file
   CURRENT_SOURCE_IP = testTools.getCurrentIP(interface)
   print(d, interface)
-  logging.info('running following services/pcaps:', selected)
+  logging.info('running following services/pcaps:' + str(selected))
 
   #run the selected Pcaps
-  primerFacade.runPcaps(d, interface, selected, selectedPcaps)
-  # for service in d:
-  #   selected[service] = []
-  #   for pcap in d[service]:
-  #     print(pcap)
-  #     if(selectedPcaps[pcapCount].get() == 1):
-  #       PREVIOUS_SOURCE_IP = testTools.getPreviousSource(pcap)
-  #       PREVIOUS_DESTINATION_IP = testTools.getPreviousDestination(pcap)
-  #       selected[service].append(pcap)
-  #       command = "tcpreplay-edit -i " + interface + " -S "  + PREVIOUS_SOURCE_IP + ":" + CURRENT_SOURCE_IP + " -D " + PREVIOUS_DESTINATION_IP + ":" + honeypotIP + " ../pcap/" + pcap
-  #       print(command)
-  #       logging.info(command)
-  #       try:
-  #         output = subprocess.check_output(['bash', '-c', command])
-  #         logging.info(output)   
-  #       except subprocess.CalledProcessError as e:
-  #         raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
-  #       print(command)
-  #     pcapCount += 1
+  success = primerFacade.runPcaps(d, interface, selected, selectedPcaps)
+
+  #After running --> have a popup telling if it was successful or not
+  if success:
+    messagebox.showinfo("Primer", "Command Ran Successfully")
+  else:
+    messagebox.showinfo("Primer", "Pcaps ran with errors - see log file for details.\nLog located at: " + logFile)
