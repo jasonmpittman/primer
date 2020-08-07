@@ -24,6 +24,9 @@ def getServicePcapMap():
 
   return d
 
+def load():
+
+
 def getPcaps():
   #read in the pcaps
   pcaps = os.listdir(path='pcap/')
@@ -31,6 +34,8 @@ def getPcaps():
 # mappings = getServicePcapMap()
 # honeypot = honeypot.Honeypot()
 # logger = logger.Logger()
+
+
 
 def runPcaps(d, interface, selected, selectedPcaps):
   successFlag = True
@@ -51,18 +56,15 @@ def runPcaps(d, interface, selected, selectedPcaps):
         logging.info(command)
         try:
           print("running command")
-          print("hehlehf")
           output = subprocess.check_output(['bash', '-c', command])
           #logging.error(output.error())
           logging.info(output)   
-          print("blegh")
         except Exception as e:
           print("caught error")
           successFlag = False
           logging.error(str(e))
           logging.error(str(RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))))
         finally:
-          print("hello")
           logging.info("Next Pcap")
           #raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
         logging.info("=========================================================================================\n")
