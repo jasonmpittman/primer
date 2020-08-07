@@ -48,14 +48,22 @@ def runPcaps(d, interface, selected, selectedPcaps):
         PREVIOUS_DESTINATION_IP = testTools.getPreviousDestination(pcap)
         selected[service].append(pcap)
         command = "tcpreplay-edit -i " + interface + " -S "  + PREVIOUS_SOURCE_IP + ":" + CURRENT_SOURCE_IP + " -D " + PREVIOUS_DESTINATION_IP + ":" + honeypotIP + " ../pcap/" + pcap
-        print(command)
         logging.info(command)
         try:
+          print("running command")
+          print("hehlehf")
           output = subprocess.check_output(['bash', '-c', command])
+          #logging.error(output.error())
           logging.info(output)   
-        except subprocess.CalledProcessError as e:
+          print("blegh")
+        except Exception as e:
+          print("caught error")
           successFlag = False
+          logging.error(str(e))
           logging.error(str(RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))))
+        finally:
+          print("hello")
+          logging.info("Next Pcap")
           #raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
         logging.info("=========================================================================================\n")
       pcapCount += 1

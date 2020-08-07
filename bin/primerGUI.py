@@ -76,7 +76,6 @@ def handle_click(root, entry, interfaceMenu, d, selectedPcaps, logFile):
   interface = interfaceMenu.get()
   #get the current source IP from the testTools file
   CURRENT_SOURCE_IP = testTools.getCurrentIP(interface)
-  print(d, interface)
   logging.info('running following services/pcaps:' + str(selected))
 
   #run the selected Pcaps
