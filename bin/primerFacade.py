@@ -25,7 +25,7 @@ def getServicePcapMap():
   return d
 
 def load():
-
+  return
 
 def getPcaps():
   #read in the pcaps
@@ -49,8 +49,9 @@ def runPcaps(d, interface, selected, selectedPcaps):
       #.get() == 1 checks if the pcap is selected
       if(selectedPcaps[pcapCount].get() == 1):
         logging.info("=========================================================================================\n RUNNING " + str(selectedPcaps[pcapCount]) + " \n")
-        PREVIOUS_SOURCE_IP = testTools.getPreviousSource(pcap)
-        PREVIOUS_DESTINATION_IP = testTools.getPreviousDestination(pcap)
+        pcapDict = testTools.getPcapIps()
+        PREVIOUS_SOURCE_IP = testTools.getPreviousSource(pcap, pcapDict)
+        PREVIOUS_DESTINATION_IP = testTools.getPreviousDestination(pcap, pcapDict)
         selected[service].append(pcap)
         command = "tcpreplay-edit -i " + interface + " -S "  + PREVIOUS_SOURCE_IP + ":" + CURRENT_SOURCE_IP + " -D " + PREVIOUS_DESTINATION_IP + ":" + honeypotIP + " ../pcap/" + pcap
         logging.info(command)
