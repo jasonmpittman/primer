@@ -32,7 +32,7 @@ sudo apt install -y python3-tk tcpreplay
 ```
 
 ## Note: 
-**Primer will not work using the Windows Linux Subsystem**
+**Primer will not work using the Windows Subsystem for Linux**
 
 The primer tool must be run on a dedicated linux machine or linux virtual environment.
 Due to the nature of the WSL, Primer cannot access network interfaces through the WSL and therefore cannot run the Primer tool.
