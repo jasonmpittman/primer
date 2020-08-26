@@ -21,10 +21,11 @@ In order to view the newly added PCAP the user must restart the primer tool.
 
 ## Dependencies
 The user must install some python dependencies in order for primer to work effectively.
-These dependencies inclue:
--tkinter
--tcpreplay-edit
-
+These dependencies include:
+```
+tkinter
+tcpreplay-edit
+```
 
 ## Note: Primer will not work using the Windows Linux Subsystem
 The primer tool must be run on a dedicated linux machine or linux virtual environment.
