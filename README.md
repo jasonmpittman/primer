@@ -26,6 +26,7 @@ These dependencies include:
 tkinter
 tcpreplay-edit
 ```
+For Ubuntu-based systems, one may install these dependencies by running the command: `sudo apt install -y python3-tk tcpreplay`
 
 ## Note: Primer will not work using the Windows Linux Subsystem
 The primer tool must be run on a dedicated linux machine or linux virtual environment.
