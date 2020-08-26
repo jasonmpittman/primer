@@ -31,6 +31,9 @@ For Ubuntu-based systems, one may install these dependencies by running the comm
 sudo apt install -y python3-tk tcpreplay
 ```
 
-## Note: Primer will not work using the Windows Linux Subsystem
+## Note: 
+# Primer will not work using the Windows Linux Subsystem
 The primer tool must be run on a dedicated linux machine or linux virtual environment.
 Due to the nature of the WSL, primer cannot access network interfaces through the WSL and therefore cannot run the primer tool.
+# Python Version Support
+The current version of Python used to run Primer is `Python 3.6.9`
