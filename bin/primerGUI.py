@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox
+from tkinter import filedialog
 import os
 import subprocess
 import primerFacade
@@ -8,6 +8,7 @@ import testTools
 import socket
 import netifaces as ni
 import logging
+import sys
 # import honeypot as honeypot
 # import testTools as tools
 # import logging as logging
@@ -40,6 +41,7 @@ def run(logFile):
       c.grid(row=counter + 1, column=0)
       pcapCount += 1
       counter += 1
+
     counter += 1
 
   l = Label(master=root, text="HONEYPOT IP:", font='Helvetica 12 bold')
@@ -58,12 +60,43 @@ def run(logFile):
 
   button = Button(master=root, text="RUN", command=lambda: handle_click(root, entry, interfaceMenu, d, selectedPcaps, logFile))
   button.grid(row=4, column=2)
+
+
+  #ADDING PCAP SECTION
+  pcapSectionHeader = Label(master=root, text="ADD A USER PCAP:", font='Helvetica 12 bold')
+  pcapSectionHeader.grid(row=5, column=4)
+
+  pcapFile = None
+  pcapFileButton = Button(master=root, text="Pcap File", command=lambda: pcap_file(root, pcapFile, pcapFileButton))
+  pcapFileButton.grid(row=6, column=4)
+
+  servicePcapHeader = Label(master=root, text="Associated services (comma seperated)", font='Helvetica 12 bold')
+  servicePcapHeader.grid(row=7, column=4)
+  servEntry = Entry(master=root, fg="yellow", bg="blue", width=30, font = 'Helvetica 10 bold')
+  servEntry.grid(row=8, column=4)
+
+  sourceLabel = Label(master=root, text="Pcap's source IP", font='Helvetica 12 bold')
+  sourceLabel.grid(row=9, column=4)
+  sourceEntry = Entry(master=root, fg="yellow", bg="blue", width=30, font = 'Helvetica 10 bold')
+  sourceEntry.grid(row=10, column=4)
+
+  destLabel = Label(master=root, text="Pcap's destination IP", font='Helvetica 12 bold')
+  destLabel.grid(row=11, column=4)
+  destEntry = Entry(master=root, fg="yellow", bg="blue", width=30, font = 'Helvetica 10 bold')
+  destEntry.grid(row=12, column=4)
+
+  addButton = Button(master=root, text="SAVE PCAP", command=lambda: add(root, pcapFile, pcapFileButton))
+  addButton.grid(row=13, column=4)
+
+
+
   root.mainloop()
   logging.info('GUI launched successfully')
 
 
-
-  
+def pcap_file(root, pcapFile, pcapFileButton):
+  pcapFile = filedialog.askopenfilename(parent=root, initialdir=os.getcwd(), title="Please select a Pcap", filetypes = [('pcap files', '.pcap')])
+  pcapFileButton.text=pcapFile
 
 def handle_click(root, entry, interfaceMenu, d, selectedPcaps, logFile):
   #Mapping to service -> pcap
