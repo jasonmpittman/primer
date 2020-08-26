@@ -1,8 +1,8 @@
-# primer
+# Primer
 Primer is a honeypot research tool which uses automated attacks, in the form of Packet Capture(PCAP) files to generate identical activity and logs.
 
-# USE
-To use primer, navigate into the `bin` directory and run the command `sudo python3 primer.py`
+# Use
+To use Primer, navigate into the `bin` directory and run the command `sudo python3 primer.py`
 This command will open the Graphical User Interface(GUI).
 The GUI is seperated into sections. The main section is where the user will select the PCAPs that they want to run, sorted by the services that these pcaps test.
 The user will then input the IP Address of the Honeypot that they want to test against.
