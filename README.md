@@ -1,9 +1,9 @@
 # primer
-Primer is a honeypot research tool which uses automated attacks to generate activity and logs
+Primer is a honeypot research tool which uses automated attacks, in the form of Packet Capture(PCAP) files to generate identical activity and logs.
 
 # USE
-To use primer, navigate into the bin directory and run >sudo python3 primer.py
-This command will open the GUI
+To use primer, navigate into the `bin` directory and run the command `sudo python3 primer.py`
+This command will open the Graphical User Interface(GUI).
 The GUI is seperated into sections. The main section is where the user will select the PCAPs that they want to run, sorted by the services that these pcaps test.
 The user will then input the IP Address of the Honeypot that they want to test against.
 Lastly, the user indicates which network interface they want to utilize when sending the command.
@@ -12,11 +12,11 @@ The program will return a dialog window detailing whether the PCAP successfully 
 
 
 ## Adding a PCAP
-The Add PCAP section of the GUI allows for a user to select a PCAP file from their local directories, upload it to primer, and allow it for the program to use it as a testing tool.
-To add a pcap, the user must select the PCAP file using the file chooser browser that appears when the *Add File* button is pressed.
-Then the user will specify which services the PCAP will test against, this will allow it to be sorted appropriately into the services and PCAPs on the left hand side of the screen
-The user must also specify the IP of the Source and Destination machines in which the desired PCAP ran against. This allows for Primer to automatically run the PCAP.
-Once the *Add PCAP* button is selected, a dialog box will appear detailing if the PCAP was successfully added.
+The `Add PCAP` section of the GUI allows for a user to select a PCAP file from their local directories, upload it to primer, and allow for the program to use it as a testing tool.
+To add a pcap, the user must select the PCAP file using the file chooser browser that appears when the `Add File` button is pressed.
+The user will then specify which services the PCAP will test against, allowing the uploaded PCAP to be sorted appropriately into the services on the left-hand side of the screen.
+The user must also specify the IP of the Source and Destination machines in which the desired PCAP ran against. This allows Primer to automatically run the PCAP.
+Once the `Add PCAP` button is selected, a dialog box will appear detailing if the PCAP was successfully added.
 In order to view the newly added PCAP the user must restart the primer tool.
 
 ## Dependencies
