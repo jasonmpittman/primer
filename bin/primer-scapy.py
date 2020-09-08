@@ -4,32 +4,40 @@ from scapy.all import *
 from scapy.utils import rdpcap
 
 
-def get_dst_mac(src_ip, dst_ip):
-    #packet = Ether(dst='ff:ff:ff:ff:ff')/ARP(pdst=dst_ip)
-    #answered,unanswered = sendp(packet)
-    ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=dst_ip),timeout=2)
-    print(ans)
-    #return answered[0][1][ARP].hwsrc
+def get_dst_mac(dst_ip):
+    """
 
-new_src_mac = Ether().src
-new_src_ip = get_if_addr(conf.iface)
+    Args:
 
-new_dst_ip = "10.0.1.1"
-new_dst_mac = get_dst_mac(new_src_ip, new_dst_ip)
+    Returns:
 
-#packets = rdpcap(" pcap.")
+    """
+    ans,unans = arping(dst_ip, verbose=0)
+    for s,r in ans:
+        #print("{} {}".format(r[Ether].src,s[ARP].pdst))
+        return r[Ether].src
 
-#for packet in packets:
-#    packet[Ether].src = new_src_mac
-#    packet[Ether].dst = new_dst_mac
+def read_pcap(pcap, dst_ip):
+    """
 
-#    packet[IP].src = new_src_ip
-#    packet[IP].dst = new_dst_ip
+    Args:
 
-#    sendp(packet)
+    Returns:
 
-print(new_src_mac)
-print(new_src_ip)
+    """
+    new_src_mac = Ether().src
+    new_src_ip = get_if_addr(conf.iface)
+    new_dst_ip = dst_ip
+    new_dst_mac = get_dst_mac(new_dst_ip)
 
-print(new_dst_ip)
-print(new_dst_mac)
+    packets = rdpcap(pcap)
+
+    for packet in packets:
+        packet[Ether].src = new_src_mac
+        packet[Ether].dst = new_dst_mac
+        packet[IP].src = new_src_ip
+        packet[IP].dst = new_dst_ip
+        del packet[IP].chksum 
+        sendp(packet)
+
+read_pcap('../pcap/simplePing.pcap', '172.18.0.104')
