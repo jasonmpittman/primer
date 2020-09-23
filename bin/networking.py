@@ -1,44 +1,42 @@
-
-
 class Networking():
+  _HostMac
+  _HostIp
+  _TargetMac
+  _TargetIp
+  _Interfaces
 
-_HostMac
-_HostIp
-_TargetMac
-_TargetIp
-_Interfaces
 
-
-@property
-host_mac(self):
+  @property
+  host_mac(self):
     return self._HostMac
 
-host_mac.setter(self, value):
+  host_mac.setter(self, value):
     self._HostMac = value
 
-@property
-host_ip(self):
+  @property
+  host_ip(self):
     return self._HostIp
 
-host_ip.setter(self, value):
+  host_ip.setter(self, value):
+    self._HostIp = value
 
+  @property
+  target_mac(self):
+    return self._TargetMac
 
-@property
-target_mac(self):
+  target_mac.setter(self, value):
+    self._TargetMac = value
 
+  @property
+  target_ip(self):
+    return self._TargetIp
 
-target_mac.setter(self):
+  target_ip.setter(self, value):
+    self._TargetIp = value
 
+  @property
+  interfaces(self):
+    return self.interfaces
 
-@property
-target_ip(self):
-
-
-target_ip.setter(self, value):
-
-
-@property
-interfaces(self):
-
-
-interfaces.setter(self, value):
+  interfaces.setter(self, value):
+    self.interfaces = value
