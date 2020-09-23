@@ -5,17 +5,17 @@ class PrimerEngine():
   _packets[]
 
   @property
-  packets(self):
+  def packets(self):
     return self._Packets
 
-  __packets.setter(self, value):
+  def _packets.setter(self, value):
     self._packets = value
 
   @property
-  networking(self):
+  def networking(self):
     return self._networking
 
-  _networking.setter(self, value):
+  def _networking.setter(self, value):
     self._networking = value
 
   def generate_packets():

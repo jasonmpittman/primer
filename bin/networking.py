@@ -7,36 +7,36 @@ class Networking():
 
 
   @property
-  host_mac(self):
+  def host_mac(self):
     return self._HostMac
 
-  host_mac.setter(self, value):
+  def host_mac.setter(self, value):
     self._HostMac = value
 
   @property
-  host_ip(self):
+  def host_ip(self):
     return self._HostIp
 
-  host_ip.setter(self, value):
+  def host_ip.setter(self, value):
     self._HostIp = value
 
   @property
-  target_mac(self):
+  def target_mac(self):
     return self._TargetMac
 
-  target_mac.setter(self, value):
+  def target_mac.setter(self, value):
     self._TargetMac = value
 
   @property
-  target_ip(self):
+  def target_ip(self):
     return self._TargetIp
 
-  target_ip.setter(self, value):
+  def target_ip.setter(self, value):
     self._TargetIp = value
 
   @property
-  interfaces(self):
+  def interfaces(self):
     return self.interfaces
 
-  interfaces.setter(self, value):
+  def interfaces.setter(self, value):
     self.interfaces = value

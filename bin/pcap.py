@@ -6,22 +6,22 @@ class pcap():
   _service()
 
   @property
-  name(self):
+  def name(self):
     return self._name
   
-  name.setter(self, value):
+  def name.setter(self, value):
     self._name = value
 
   @property
-  sourceIp(self):
+  def sourceIp(self):
     return self._sourceIp
   
-  sourceIp.setter(self, value):
+  def sourceIp.setter(self, value):
     self._sourceIp = value
 
   @property
-  destinationIp(self):
+  def destinationIp(self):
     return self._destinationIp
   
-  destinationIp.setter(self, value):
+  def destinationIp.setter(self, value):
     self._destinationIp = value
