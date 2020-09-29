@@ -21,6 +21,30 @@ class PrimerEngine():
   def generate_packets():
     return
 
+  def handle_run(self):
+    #Mapping to service -> pcap
+    selected =  {
+      "service": ["example.pcap"]
+    }
+    selected.clear()
+
+    servicePcapMap = primerFacade.getServicePcapMap()
+    #retrieve info from fields
+    _networking.honeypotIP = self.honeyPotEntry.get()
+    interface = self.interfaceMenu.get()
+    #get the current source IP from the testTools file
+    CURRENT_SOURCE_IP = testTools.getCurrentIP(interface)
+    #logging.info('running following services/pcaps:' + str(selected))
+
+    #run the selected Pcaps
+    success = self.runPcaps(servicePcapMap, interface, selected, self.selectedPcaps)
+
+    #After running --> have a popup telling if it was successful or not
+    if success:
+      tk.messagebox.showinfo("Primer", "Command Ran Successfully")
+    else:
+      tk.messagebox.showinfo("Primer", "Pcaps ran with errors - see log file for details.\nLog located at: " + self.logFile)
+
   def runPcaps(d, interface, selected, selectedPcaps):
   successFlag = True
   #get the current source IP from the testTools file
@@ -43,7 +67,7 @@ class PrimerEngine():
           print("running command")
           output = subprocess.check_output(['bash', '-c', command])
           #logging.error(output.error())
-          logging.info(output)   
+          logging.info(output)
         except Exception as e:
           print("caught error")
           successFlag = False

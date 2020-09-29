@@ -21,9 +21,9 @@ class mainform(tk.Frame):
     self.title.grid(row=0, column=1)
 
     #get the dictionary of services --> pcaps
-    servicePcapMap = primerFacade.getServicePcapMap()
+    servicePcapMap = primer.getServicePcapMap()
 
- 
+
     counter = 1
     pcapCount = 0
     selectedServices = []
@@ -50,7 +50,7 @@ class mainform(tk.Frame):
 
     self.honeyPotEntry = tk.Entry(master=self, fg="yellow", bg="blue", width=30, font = 'Helvetica 10 bold')
     self.honeyPotEntry.grid(row=1, column=2)
-  
+
     #create the network interface chooser
     self.netiLabel = tk.Label(master=self, text="CONNECTION INTERFACE:", font='Helvetica 12 bold')
     self.netiLabel.grid(row=0, column=4)
@@ -74,30 +74,6 @@ class mainform(tk.Frame):
 
 
 
-  def handle_run(self):
-    #Mapping to service -> pcap
-    selected =  {
-      "service": ["example.pcap"]
-    }
-    selected.clear()
-
-    servicePcapMap = primerFacade.getServicePcapMap()
-    #retrieve info from fields
-    primerFacade.honeypotIP = self.honeyPotEntry.get()
-    interface = self.interfaceMenu.get()
-    #get the current source IP from the testTools file
-    CURRENT_SOURCE_IP = testTools.getCurrentIP(interface)
-    #logging.info('running following services/pcaps:' + str(selected))
-
-    #run the selected Pcaps
-    success = primerFacade.runPcaps(servicePcapMap, interface, selected, self.selectedPcaps)
-
-    #After running --> have a popup telling if it was successful or not
-    if success:
-      tk.messagebox.showinfo("Primer", "Command Ran Successfully")
-    else:
-      tk.messagebox.showinfo("Primer", "Pcaps ran with errors - see log file for details.\nLog located at: " + self.logFile)
-
   def open_New_Window(self):
     self.newWindow = tk.Toplevel(self.master)
     self.newWindow.title("Add a Pcap")
@@ -105,7 +81,7 @@ class mainform(tk.Frame):
     self.newWindow.grid()
 
     self.label = tk.Label(self.newWindow, text = "New PCAP Entry")
-    self.label.grid(row=0, column=0)     
+    self.label.grid(row=0, column=0)
 
     self.fileLabel = tk.Label(self.newWindow, text = "Pcap File:")
     self.fileLabel.grid(row=1, column=0)
@@ -113,12 +89,12 @@ class mainform(tk.Frame):
     self.fileButton.grid(row=2, column=0)
 
     self.newSourceLabel = tk.Label(self.newWindow, text = "Pcap Source IP:")
-    self.newSourceLabel.grid(row=3, column=0) 
+    self.newSourceLabel.grid(row=3, column=0)
     self.newSourceEntry = tk.Entry(self.newWindow, fg="yellow", bg="blue", width=30, font = 'Helvetica 10 bold')
     self.newSourceEntry.grid(row=4, column=0)
 
     self.newDestinationLabel = tk.Label(self.newWindow, text = "Pcap Destination IP:")
-    self.newDestinationLabel.grid(row=5, column=0) 
+    self.newDestinationLabel.grid(row=5, column=0)
     self.newDestinationEntry = tk.Entry(self.newWindow, fg="yellow", bg="blue", width=30, font = 'Helvetica 10 bold')
     self.newDestinationEntry.grid(row=6, column=0)
 

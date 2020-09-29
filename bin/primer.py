@@ -35,17 +35,18 @@ class Primer():
     return services
 
   def getServicePcapMap():
-    #Mapping to service -> pcap
+    #create dictionary with key of service and value of name
+    #pcapInfo[1] mapped to pcapInfo[0] (1 is service, 0 is name)
     d =  {
     "service": ["example.pcap"]
     }
     d.clear()
-    file = open("../config/mapping.csv", "r")
+    file = open("../config/pcapInfo.csv", "r")
     mappings = file.read().split("\n")
     #Adding the dictionary Key (Service) to Values (Array of pcaps)
     for y in mappings:
       x = y.split(",")
-      d.update( {x[0] : x[1::]} )
+      d.update( {x[1] : x[0::]} )
 
     return d
 

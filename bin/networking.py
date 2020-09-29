@@ -1,9 +1,14 @@
+from getmac import get_mac_address as gma
+import socket
+import netifaces as ni
+
 class Networking():
-  _HostMac
-  _HostIp
-  _TargetMac
-  _TargetIp
-  _Interfaces
+  def __init__(self):
+    self._HostMac = gma()
+    self._HostIp = None
+    self._TargetMac = None
+    self._TargetIp = None
+    self._Interfaces = self.fetchInterfaces()
 
 
   @property
@@ -36,7 +41,14 @@ class Networking():
 
   @property
   def interfaces(self):
-    return self.interfaces
+    return self.__Interfaces
 
   def interfaces.setter(self, value):
-    self.interfaces = value
+    self.__Interfaces = value
+
+  def runtimeSetting(self, interface_choice):
+      self.__HostIp = ni.ifaddresses(interface_choice)[ni.AF_INET][0]['addr']
+
+  def fetchInterfaces(self):
+    interfaces_list = ni.interfaces()
+    return interfaces_list
