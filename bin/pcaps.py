@@ -19,3 +19,15 @@ class pcaps():
     for x in pcaps:
       #create a new object with the name of the pcap file x
       newPcap = pcap(x)
+      self.readConfig(x, newPcap)
+
+  def readConfig(self, name, pcap):
+      file = open("../config/pcapInfo.csv", "r")
+      #pcapName,service,source,destination
+      for line in file:
+          pcapInfo = line.split(',')
+          if(pcap.name == name):
+            pcap.name.setter(pcapInfo[0])
+            pcap.service.setter(pcapInfo[1])
+            pcap.sourceIp.setter(pcapInfo[2])
+            pcap.destinationIp.setter(pcapInfo[3])

@@ -28,5 +28,9 @@ class pcap():
   def destinationIp.setter(self, value):
     self._destinationIp = value
 
-  def readConfig(self):
-      open("../config/pcapInfo.csv")
+  @property
+  def service(self):
+    return self._service
+
+  def service.setter(self, value):
+    self._service = value
