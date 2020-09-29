@@ -15,11 +15,11 @@ class mainform(tk.Frame):
     self.create_widgets()
     self.logFile = ""
 
+
   def create_widgets(self):
     #create the pcap chooser
     self.title = tk.Label(master=self, text="Select a PCAP to run:", font='Helvetica 12 bold')
     self.title.grid(row=0, column=1)
-
     #get the dictionary of services --> pcaps
     servicePcapMap = primer.getServicePcapMap()
 
@@ -55,7 +55,7 @@ class mainform(tk.Frame):
     self.netiLabel = tk.Label(master=self, text="CONNECTION INTERFACE:", font='Helvetica 12 bold')
     self.netiLabel.grid(row=0, column=4)
 
-    interfaces_list = testTools.getInterfaceList()
+    interfaces_list = primer.getInterfaceList()
     interface = tk.StringVar()
     self.interfaceMenu = ttk.Combobox(master=self, textvariable=interface, values=interfaces_list)
     self.interfaceMenu.grid(row=1, column=4)
@@ -63,7 +63,7 @@ class mainform(tk.Frame):
     #create the run button
     self.run = tk.Button(self)
     self.run["text"] = "RUN"
-    self.run["command"] = self.handle_run
+    self.run["command"] = primer.handle_run()
     self.run.grid(row=4, column=2)
 
     #create the add button
@@ -105,11 +105,28 @@ class mainform(tk.Frame):
     self.newWindow.destroy()
 
   def file_chooser(self):
+    #make this actually work to add a pcap to the config file eventually
     self.newPcapFile = tk.filedialog.askopenfile(parent=self.newWindow, initialdir=os.getcwd(), title="Please select a Pcap", filetypes = [('pcap files', '.pcap')])
     print(self.newPcapFile)
     self.fileLabel.text=self.newPcapFile.name
     self.fileLabel.grid(row=1, column=0)
 
-root = tk.Tk()
-app = mainform(master=root)
-app.mainloop()
+  def handle_run(self):
+    #Mapping to service -> pcap
+    selected =  {
+      "service": ["example.pcap"]
+    }
+    selected.clear()
+
+    servicePcapMap = primer.getServicePcapMap()
+    #retrieve info from fields
+    honeypotIP = self.honeyPotEntry.get()
+    interface = self.interfaceMenu.get()
+
+    success = primer.runPcaps(servicePcapMap, honeypotIP, interface, self.selectedPcaps)
+
+    #After running --> have a popup telling if it was successful or not
+    if success:
+      tk.messagebox.showinfo("Primer", "Command Ran Successfully")
+    else:
+      tk.messagebox.showinfo("Primer", "Pcaps ran with errors - see log file for details.\nLog located at: " + self.logFile)

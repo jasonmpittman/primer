@@ -46,7 +46,7 @@ class Networking():
   def interfaces.setter(self, value):
     self.__Interfaces = value
 
-  def runtimeSetting(self, interface_choice):
+  def runtimeSelfIpSet(self, interface_choice):
       self.__HostIp = ni.ifaddresses(interface_choice)[ni.AF_INET][0]['addr']
 
   def fetchInterfaces(self):

@@ -2,12 +2,14 @@ import logging
 import datetime
 import sys
 import os
+import pcaps, networking, primer-engine, mainform
 
 class Primer():
-  _pcaps()
-  _networking()
-  _primerEngine()
-  _mainForm()
+  def __init__(self):
+    self.__pcaps = None
+    self.__networking = None
+    self.__primerEngine = None
+    self.__mainForm = None
 
   def main():
     #set up the logger
@@ -26,33 +28,42 @@ class Primer():
     self._networking = networking()
     self._primerEngine = primerEngine()
     self._mainForm = mainform()
+    root = tk.Tk()
+    app = mainform(master=root)
+    app.mainloop()
     return
 
   def getServices():
     #read in the config file for the service list
-    f = open("../config/services.csv", "r")
-    services = f.read().split(",")
-    return services
+    #f = open("../config/services.csv", "r")
+    #services = f.read().split(",")
+    #return services
+    return
 
-  def getServicePcapMap():
+  def getServicePcapMap(self):
     #create dictionary with key of service and value of name
     #pcapInfo[1] mapped to pcapInfo[0] (1 is service, 0 is name)
-    d =  {
+    dict =  {
     "service": ["example.pcap"]
     }
-    d.clear()
-    file = open("../config/pcapInfo.csv", "r")
-    mappings = file.read().split("\n")
-    #Adding the dictionary Key (Service) to Values (Array of pcaps)
-    for y in mappings:
-      x = y.split(",")
-      d.update( {x[1] : x[0::]} )
+    dict.clear()
+    pcaps = self.__pcaps.getPcaps()
+    #Adding the dictionary Key (Service) to Values (Array of pcap names)
+    #for a pcap object in the collection of pcaps
+    for pcap in pcaps:
+      dict.update( {pcap.service() : pcap.name()::} )
+    return dict
 
-    return d
-
-  def getPcaps():
+  def getPcaps(self):
     #read in the pcaps
     pcaps = os.listdir(path='pcap/')
     return pcaps
+
+  def runPcaps(self, servicePcapMap, honeypotIP, interface, selectedPcaps):
+      networking.sourceIp.runtimeSelfIpSet(interface)
+      primerEngine.runPcaps(servicePcapMap, selectedPcaps)
+
+  def getInterfaceList(self):
+      return self.networking.interfaces()
 
 main()
