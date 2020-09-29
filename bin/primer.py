@@ -1,6 +1,7 @@
 import logging
 import datetime
 import sys
+import os
 
 class Primer():
   _pcaps()
@@ -10,12 +11,17 @@ class Primer():
 
   def main():
     #set up the logger
-    logFileName = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")+'.log'
+    #folder YearMonthDay
+    os.mkdir("../logs/" + datetime.datetime.now().strftime("%Y%m%d"))
+    #create the log file in the new monthday folder
+    logFileName = datetime.datetime.now().strftime("%Y%m%d") + "/" + datetime.datetime.now().strftime("%H%M%S")+'.log'
     logFilePath = '../logs/'+ logFileName
     open(logFilePath, 'w')
     sys.stdout = open(logFilePath, 'w')
     sys.stderr = open(logFilePath, 'w')
     logging.basicConfig(filename=logFilePath,level=logging.DEBUG)
+
+    #init the primer objects
     self._pcaps = pcaps()
     self._networking = networking()
     self._primerEngine = primerEngine()

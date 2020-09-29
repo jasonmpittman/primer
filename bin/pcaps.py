@@ -2,24 +2,29 @@ import pcap
 class pcaps():
   def __init__(self):
     self._pcaps = [None]
+    self.createPcaps()
 
   @property
   def pcaps(self):
     return self._pcaps
 
-  def __pcaps.setter(self, pcap):
-    self.__pcaps = pcap
+  def __pcaps.setter(self, pcaps):
+    self.__pcaps = pcaps
 
   def getPcaps():
-    return __pcaps
+    return self.__pcaps
 
   def createPcaps():
     #read in the pcaps
-    pcaps = os.listdir(path='pcap/')
-    for x in pcaps:
-      #create a new object with the name of the pcap file x
-      newPcap = pcap(x)
-      self.readConfig(x, newPcap)
+    pcapFiles = os.listdir(path='pcap/')
+    for name in pcapFiles:
+      #create a new object with the name of the pcap file name
+      newPcap = pcap(name)
+      #read the config file until we find the matching pcap name
+      self.readConfig(name, newPcap)
+      #append the fully detailed pcap file to the collection
+      self.__pcaps.append(newPcap)
+
 
   def readConfig(self, name, pcap):
       file = open("../config/pcapInfo.csv", "r")
