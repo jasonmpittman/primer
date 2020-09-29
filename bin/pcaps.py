@@ -8,3 +8,8 @@ class pcaps():
   
   def __pcaps.setter(self, pcap):
     self.__pcaps = pcap
+
+  def getPcaps():
+    #read in the pcaps
+    pcaps = os.listdir(path='pcap/')
+    return pcaps
