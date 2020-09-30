@@ -1,5 +1,7 @@
 import pcap
 class pcaps():
+  __pcaps()
+  
   def __init__(self):
     self._pcaps = [None]
     self.createPcaps()
