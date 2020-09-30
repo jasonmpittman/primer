@@ -25,6 +25,7 @@ These dependencies include:
 ```
 tkinter
 tcpreplay-edit
+getmac
 ```
 For Ubuntu-based systems, one may install these dependencies by running the command: 
 ```

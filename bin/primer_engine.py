@@ -8,14 +8,14 @@ class PrimerEngine():
   def packets(self):
     return self._Packets
 
-  def _packets.setter(self, value):
+  def _setPackets(self, value):
     self._packets = value
 
   @property
   def networking(self):
     return self._networking
 
-  def _networking.setter(self, value):
+  def _setNetworking(self, value):
     self._networking = value
 
   def generate_packets(self):

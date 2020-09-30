@@ -11,26 +11,26 @@ class pcap():
   def name(self):
     return self._name
 
-  def name.setter(self, value):
+  def setName(self, value):
     self._name = value
 
   @property
   def sourceIp(self):
     return self._sourceIp
 
-  def sourceIp.setter(self, value):
+  def setSourceIp(self, value):
     self._sourceIp = value
 
   @property
   def destinationIp(self):
     return self._destinationIp
 
-  def destinationIp.setter(self, value):
+  def setDestinationIp(self, value):
     self._destinationIp = value
 
   @property
   def service(self):
     return self._service
 
-  def service.setter(self, value):
+  def setService(self, value):
     self._service = value

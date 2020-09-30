@@ -15,38 +15,38 @@ class Networking():
   def host_mac(self):
     return self._HostMac
 
-  def host_mac.setter(self, value):
+  def setHost_mac(self, value):
     self._HostMac = value
 
   @property
   def host_ip(self):
     return self._HostIp
 
-  def host_ip.setter(self, value):
+  def setHost_ip(self, value):
     self._HostIp = value
 
   @property
   def target_mac(self):
     return self._TargetMac
 
-  def target_mac.setter(self, value):
+  def setTarget_mac(self, value):
     self._TargetMac = value
 
   @property
   def target_ip(self):
     return self._TargetIp
 
-  def target_ip.setter(self, value):
+  def setTarget_ip(self, value):
     self._TargetIp = value
 
   @property
   def interfaces(self):
     return self.__Interfaces
 
-  def interfaces.setter(self, value):
+  def setInterfaces(self, value):
     self.__Interfaces = value
 
-  def runtimeSelfIpSet(self, interface_choice):
+  def setHostIpRuntime(self, interface_choice):
       self.__HostIp = ni.ifaddresses(interface_choice)[ni.AF_INET][0]['addr']
 
   def fetchInterfaces(self):

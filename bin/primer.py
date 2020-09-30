@@ -2,7 +2,7 @@ import logging
 import datetime
 import sys
 import os
-import pcaps, networking, primerEngine, mainform
+import pcaps, networking, primer_engine, mainform
 
 class Primer():
   def __init__(self):
@@ -51,7 +51,7 @@ class Primer():
     #Adding the dictionary Key (Service) to Values (Array of pcap names)
     #for a pcap object in the collection of pcaps
     for pcap in pcaps:
-      if(dict.get(pcap.service()) == None)
+      if(dict.get(pcap.service() == None)):
         #if the service does not exist in our map, add it and the pcap
         dict.update( {pcap.service() : pcap.name()} )
       else:
@@ -65,7 +65,7 @@ class Primer():
     return pcaps
 
   def runPcaps(self, servicePcapMap, honeypotIP, interface, selectedPcaps):
-      networking.sourceIp.runtimeSelfIpSet(interface)
+      networking.sourceIp.setHostIpRuntime(interface)
       primerEngine.runPcaps(servicePcapMap, selectedPcaps)
 
   def getInterfaceList(self):

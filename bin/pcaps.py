@@ -1,7 +1,5 @@
 import pcap
 class pcaps():
-  __pcaps()
-  
   def __init__(self):
     self._pcaps = [None]
     self.createPcaps()
@@ -10,7 +8,7 @@ class pcaps():
   def pcaps(self):
     return self._pcaps
 
-  def __pcaps.setter(self, pcaps):
+  def setPcaps(self, pcaps):
     self.__pcaps = pcaps
 
   def getPcaps():
@@ -34,7 +32,7 @@ class pcaps():
       for line in file:
           pcapInfo = line.split(',')
           if(pcap.name == name):
-            pcap.name.setter(pcapInfo[0])
-            pcap.service.setter(pcapInfo[1])
-            pcap.sourceIp.setter(pcapInfo[2])
-            pcap.destinationIp.setter(pcapInfo[3])
+            pcap.setName(pcapInfo[0])
+            pcap.setService(pcapInfo[1])
+            pcap.setSourceIp(pcapInfo[2])
+            pcap.setDestinationIp(pcapInfo[3])
