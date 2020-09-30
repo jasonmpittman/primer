@@ -10,8 +10,9 @@ class Primer():
     self.__networking = None
     self.__primerEngine = None
     self.__mainForm = None
+    self.main()
 
-  def __main():
+  def main(self):
     #set up the logger
     #folder YearMonthDay
     os.mkdir("../logs/" + datetime.datetime.now().strftime("%Y%m%d"))
@@ -31,9 +32,9 @@ class Primer():
     root = tk.Tk()
     app = mainform(master=root)
     app.mainloop()
-    return
+    #return
 
-  def getServices():
+  def getServices(self):
     #read in the config file for the service list
     #f = open("../config/services.csv", "r")
     #services = f.read().split(",")
@@ -66,9 +67,10 @@ class Primer():
 
   def runPcaps(self, servicePcapMap, honeypotIP, interface, selectedPcaps):
       networking.sourceIp.setHostIpRuntime(interface)
+      networking.setTarget_ip(honeypotIP)
       primerEngine.runPcaps(servicePcapMap, selectedPcaps)
 
   def getInterfaceList(self):
       return self.networking.interfaces()
 
-#main()
+primer = Primer()
