@@ -11,7 +11,7 @@ class Primer():
     self.__primerEngine = None
     self.__mainForm = None
 
-  def main():
+  def __main():
     #set up the logger
     #folder YearMonthDay
     os.mkdir("../logs/" + datetime.datetime.now().strftime("%Y%m%d"))
@@ -71,4 +71,4 @@ class Primer():
   def getInterfaceList(self):
       return self.networking.interfaces()
 
-main()
+#main()
