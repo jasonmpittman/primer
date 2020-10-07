@@ -31,6 +31,7 @@ scapy
 For Ubuntu-based systems, one may install these dependencies by running the command: 
 ```
 sudo apt install -y python3-tk tcpreplay
+sudo pip3 install getmac scapy
 ```
 
 ## Note: 
