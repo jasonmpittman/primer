@@ -3,12 +3,13 @@ import socket
 import netifaces as ni
 
 class Networking():
-  def __init__(self):
+  def __init__(self, logging):
     self._HostMac = gma()
     self._HostIp = None
     self._TargetMac = None
     self._TargetIp = None
     self._Interfaces = self.fetchInterfaces()
+    self.logging = logging
 
 
   @property

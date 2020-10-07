@@ -1,10 +1,12 @@
 from scapy.all import *
 from scapy.utils import rdpcap
+import logging 
 
 class PrimerEngine():
-  def __init__(self, newNetworking):
+  def __init__(self, newNetworking, logging):
     self._networking = newNetworking
     self._packets = [None]
+    self.logging = logging
 
   @property
   def packets(self):
@@ -72,7 +74,7 @@ class PrimerEngine():
         #selected Pcaps is the entire lsit of pcaps
         #.get() == 1 checks if the pcap is selected
         if(selectedPcaps[pcapCount].get() == 1):
-          logging.info("=========================================================================================\n RUNNING " + str(selectedPcaps[pcapCount]) + " \n")
+          self.logging.info("==========================================================\n RUNNING " + str(selectedPcaps[pcapCount]) + " \n")
           readPcap(pcap, self._networking.target_ip())
           generate_packets()
           # pcapDict = testTools.getPcapIps()
@@ -80,20 +82,20 @@ class PrimerEngine():
           # PREVIOUS_DESTINATION_IP = testTools.getPreviousDestination(pcap, pcapDict)
           # selected[service].append(pcap)
           # command = "tcpreplay-edit -i " + interface + " -S "  + PREVIOUS_SOURCE_IP + ":" + CURRENT_SOURCE_IP + " -D " + PREVIOUS_DESTINATION_IP + ":" + honeypotIP + " ../pcap/" + pcap
-          # logging.info(command)
+          # self.logging.info(command)
           try:
             print("running command")
             output = subprocess.check_output(['bash', '-c', command])
-            #logging.error(output.error())
-          #   logging.info(output)
-          # except Exception as e:
-          #   print("caught error")
-          #   successFlag = False
-          #   logging.error(str(e))
-          #   logging.error(str(RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))))
-          # finally:
-          #   logging.info("Next Pcap")
-          #   #raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
-          logging.info("=========================================================================================\n")
+            #self.logging.error(output.error())
+          #   self.logging.info(output)
+          except Exception as e:
+             print("caught error")
+             successFlag = False
+             self.logging.error(str(e))
+             self.logging.error(str(RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))))
+          finally:
+             self.logging.info("Next Pcap")
+             #raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
+          self.logging.info("======================================================================\n")
         pcapCount += 1
     return successFlag

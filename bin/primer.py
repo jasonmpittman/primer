@@ -25,10 +25,10 @@ class Primer():
     logging.basicConfig(filename=logFilePath,level=logging.DEBUG)
 
     #init the primer objects
-    self._pcaps = pcaps()
-    self._networking = networking()
-    self._primerEngine = primerEngine()
-    self._mainForm = mainform()
+    self._pcaps = pcaps(logging)
+    self._networking = networking(logging)
+    self._primerEngine = primerEngine(self._networking, logging)
+    self._mainForm = mainform(logging)
     root = tk.Tk()
     app = mainform(master=root)
     app.mainloop()

@@ -8,12 +8,13 @@ import primerFacade
 import logging
 
 class mainform(tk.Frame):
-  def __init__(self, master=None):
+  def __init__(self, logging):
     super().__init__(master)
     self.master = master
     self.grid()
     self.create_widgets()
     self.logFile = ""
+    self.logging = logging
 
 
   def create_widgets(self):

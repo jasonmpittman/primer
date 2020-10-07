@@ -1,8 +1,9 @@
 import pcap
 class pcaps():
-  def __init__(self):
+  def __init__(self, logging):
     self._pcaps = [None]
     self.createPcaps()
+    self.logging = logging
 
   @property
   def pcaps(self):
