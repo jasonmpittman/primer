@@ -6,7 +6,7 @@ import os
 import testTools
 import primerFacade
 import logging
-import primer
+import primer_interface as primerInterface
 
 class mainform(tk.Frame):
   def __init__(self, master):
@@ -23,7 +23,7 @@ class mainform(tk.Frame):
     self.title = tk.Label(master=self, text="Select a PCAP to run:", font='Helvetica 12 bold')
     self.title.grid(row=0, column=1)
     #get the dictionary of services --> pcaps
-    servicePcapMap = primer.getServicePcapMap()
+    servicePcapMap = primerInterface.getServicePcapMap()
 
 
     counter = 1
@@ -120,12 +120,12 @@ class mainform(tk.Frame):
     }
     selected.clear()
 
-    servicePcapMap = primer.getServicePcapMap()
+    servicePcapMap = primerInterface.getServicePcapMap()
     #retrieve info from fields
     honeypotIP = self.honeyPotEntry.get()
     interface = self.interfaceMenu.get()
 
-    success = primer.runPcaps(servicePcapMap, honeypotIP, interface, self.selectedPcaps)
+    success = primerInterface.runPcaps(servicePcapMap, honeypotIP, interface, self.selectedPcaps)
 
     #After running --> have a popup telling if it was successful or not
     if success:

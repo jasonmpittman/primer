@@ -51,36 +51,5 @@ class Primer():
     #return services
     return
 
-  def getServicePcapMap(self):
-    #create dictionary with key of service and value of name
-    #pcapInfo[1] mapped to pcapInfo[0] (1 is service, 0 is name)
-    dict =  {
-    "service": ["example.pcap"]
-    }
-    dict.clear()
-    pcaps = self.__pcaps.getPcaps()
-    #Adding the dictionary Key (Service) to Values (Array of pcap names)
-    #for a pcap object in the collection of pcaps
-    for pcap in pcaps:
-      if(dict.get(pcap.service() == None)):
-        #if the service does not exist in our map, add it and the pcap
-        dict.update( {pcap.service() : pcap.name()} )
-      else:
-        #if the service does exist in our map, just append thename to the name array
-        dict.get(pcap.service()).append(pcap.name())
-    return dict
-
-  def getPcaps(self):
-    #read in the pcaps
-    pcaps = os.listdir(path='pcap/')
-    return pcaps
-
-  def runPcaps(self, servicePcapMap, honeypotIP, interface, selectedPcaps):
-      networking.sourceIp.setHostIpRuntime(interface)
-      networking.setTarget_ip(honeypotIP)
-      primerEngine.runPcaps(servicePcapMap, selectedPcaps)
-
-  def getInterfaceList(self):
-      return self.networking.interfaces()
 
 primer = Primer()
