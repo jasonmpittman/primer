@@ -1,43 +1,43 @@
-#!/usr/bin/env python3
+# #!/usr/bin/env python3
+# import os
+# from scapy.all import *
+# from scapy.utils import rdpcap
 
-from scapy.all import *
-from scapy.utils import rdpcap
 
+# def get_dst_mac(dst_ip):
+#     """
 
-def get_dst_mac(dst_ip):
-    """
+#     Args:
 
-    Args:
+#     Returns:
 
-    Returns:
+#     """
+#     ans,unans = arping(dst_ip, verbose=0)
+#     for s,r in ans:
+#         #print("{} {}".format(r[Ether].src,s[ARP].pdst))
+#         return r[Ether].src
 
-    """
-    ans,unans = arping(dst_ip, verbose=0)
-    for s,r in ans:
-        #print("{} {}".format(r[Ether].src,s[ARP].pdst))
-        return r[Ether].src
+# def read_pcap(pcap, dst_ip):
+#     """
 
-def read_pcap(pcap, dst_ip):
-    """
+#     Args:
 
-    Args:
+#     Returns:
 
-    Returns:
+#     """
+#     new_src_mac = Ether().src
+#     new_src_ip = get_if_addr(conf.iface)
+#     new_dst_ip = dst_ip
+#     new_dst_mac = get_dst_mac(new_dst_ip)
 
-    """
-    new_src_mac = Ether().src
-    new_src_ip = get_if_addr(conf.iface)
-    new_dst_ip = dst_ip
-    new_dst_mac = get_dst_mac(new_dst_ip)
+#     packets = rdpcap(pcap)
 
-    packets = rdpcap(pcap)
+#     for packet in packets:
+#         packet[Ether].src = new_src_mac
+#         packet[Ether].dst = new_dst_mac
+#         packet[IP].src = new_src_ip
+#         packet[IP].dst = new_dst_ip
+#         del packet[IP].chksum 
+#         sendp(packet)
 
-    for packet in packets:
-        packet[Ether].src = new_src_mac
-        packet[Ether].dst = new_dst_mac
-        packet[IP].src = new_src_ip
-        packet[IP].dst = new_dst_ip
-        del packet[IP].chksum 
-        sendp(packet)
-
-read_pcap('../pcap/simplePing.pcap', '172.18.0.104')
+# read_pcap('../pcap/simplePing.pcap', '172.18.0.104')

@@ -15,7 +15,10 @@ class Primer():
   def main(self):
     #set up the logger
     #folder YearMonthDay
+    #try:
     os.mkdir("../logs/" + datetime.datetime.now().strftime("%Y%m%d"))
+    #except Exception e:
+
     #create the log file in the new monthday folder
     logFileName = datetime.datetime.now().strftime("%Y%m%d") + "/" + datetime.datetime.now().strftime("%H%M%S")+'.log'
     logFilePath = '../logs/'+ logFileName
