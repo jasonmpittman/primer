@@ -16,7 +16,7 @@ class Primer():
     #set up the logger
     #folder YearMonthDay
     #try:
-    os.mkdir("../logs/" + datetime.datetime.now().strftime("%Y%m%d"))
+    os.makedirs("../logs/" + datetime.datetime.now().strftime("%Y%m%d"), exist_ok=True)
     #except Exception e:
 
     #create the log file in the new monthday folder
