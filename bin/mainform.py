@@ -8,7 +8,7 @@ import primerFacade
 import logging
 
 class mainform(tk.Frame):
-  def __init__(self, logging):
+  def __init__(self, logging, master):
     super().__init__(master)
     self.master = master
     self.grid()

@@ -1,30 +1,34 @@
 import pcap
+import os 
+
 class pcaps():
   def __init__(self, logging):
-    self._pcaps = [None]
+    self.pcaps([])
     self.createPcaps()
     self.logging = logging
 
   @property
   def pcaps(self):
-    return self._pcaps
+    return self.pcaps
 
-  def setPcaps(self, pcaps):
-    self.__pcaps = pcaps
+  def pcaps(self, pcaps):
+    self.pcaps = pcaps
 
   def getPcaps():
-    return self.__pcaps
+    return self.pcaps
 
-  def createPcaps():
+  def createPcaps(self):
     #read in the pcaps
-    pcapFiles = os.listdir(path='pcap/')
+    pcapFiles = os.listdir(path='../pcap/')
+    print("pcap files: ")
+    print(pcapFiles)
     for name in pcapFiles:
       #create a new object with the name of the pcap file name
-      newPcap = pcap(name)
+      newPcap = pcap.pcap(name)
       #read the config file until we find the matching pcap name
       self.readConfig(name, newPcap)
       #append the fully detailed pcap file to the collection
-      self.__pcaps.append(newPcap)
+      self.pcaps.append(newPcap)
 
 
   def readConfig(self, name, pcap):
@@ -32,8 +36,8 @@ class pcaps():
       #pcapName,service,source,destination
       for line in file:
           pcapInfo = line.split(',')
-          if(pcap.name == name):
+          if(pcap._name == name):
             pcap.setName(pcapInfo[0])
-            pcap.setService(pcapInfo[1])
-            pcap.setSourceIp(pcapInfo[2])
-            pcap.setDestinationIp(pcapInfo[3])
+            pcap._service(pcapInfo[1])
+            pcap._sourceIp(pcapInfo[2])
+            pcap._destinationIp(pcapInfo[3])

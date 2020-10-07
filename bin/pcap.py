@@ -2,35 +2,41 @@
 class pcap():
   def __init__(self, newName):
     self._name(newName)
-    self._sourceIp()
-    self._destinationIp()
-    self._service()
-    self.readConfig()
+    #self._sourceIp()
+    #self._destinationIp()
+    #self._service()
+    #self.readConfig()
 
   @property
-  def name(self):
+  def _name(self):
     return self._name
+
+  def _name(self, value):
+    self._name = value
 
   def setName(self, value):
     self._name = value
 
   @property
-  def sourceIp(self):
+  def _sourceIp(self):
     return self._sourceIp
 
-  def setSourceIp(self, value):
+  def _sourceIp(self, value):
+    self._sourceIp = value
+
+  def setSourceIp(self,value):
     self._sourceIp = value
 
   @property
-  def destinationIp(self):
+  def _destinationIp(self):
     return self._destinationIp
 
-  def setDestinationIp(self, value):
+  def _destinationIp(self, value):
     self._destinationIp = value
 
   @property
-  def service(self):
+  def _service(self):
     return self._service
 
-  def setService(self, value):
+  def _service(self, value):
     self._service = value

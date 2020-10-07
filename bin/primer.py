@@ -2,6 +2,7 @@ import logging
 import datetime
 import sys
 import os
+import tkinter as tk
 import pcaps, networking, primer_engine, mainform
 
 class Primer():
@@ -28,13 +29,13 @@ class Primer():
     logging.basicConfig(filename=logFilePath,level=logging.DEBUG)
 
     #init the primer objects
-    self._pcaps = pcaps(logging)
-    self._networking = networking(logging)
-    self._primerEngine = primerEngine(self._networking, logging)
-    self._mainForm = mainform(logging)
+    self._pcaps = pcaps.pcaps(logging)
+    self._networking = networking.Networking(logging)
+    self._primerEngine = primer_engine.PrimerEngine(self._networking, logging)
     root = tk.Tk()
-    app = mainform(master=root)
-    app.mainloop()
+    self._mainForm = mainform.mainform(logging, master=root)
+    #app = mainform(master=root)
+    self._mainForm.mainloop()
     #return
 
   def getServices(self):
