@@ -6,15 +6,16 @@ import os
 import testTools
 import primerFacade
 import logging
+import primer
 
 class mainform(tk.Frame):
-  def __init__(self, logging, master):
+  def __init__(self, master):
     super().__init__(master)
     self.master = master
     self.grid()
     self.create_widgets()
     self.logFile = ""
-    self.logging = logging
+    #self.logging = logging
 
 
   def create_widgets(self):

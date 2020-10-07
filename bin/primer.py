@@ -32,11 +32,17 @@ class Primer():
     self._pcaps = pcaps.pcaps(logging)
     self._networking = networking.Networking(logging)
     self._primerEngine = primer_engine.PrimerEngine(self._networking, logging)
+
+    #gui setup
+    if os.environ.get('DISPLAY','') == '':
+      logging.info('no display found. Using non-interactive Agg backend')
+      os.environ.__setitem__('DISPLAY', ':0.0')
     root = tk.Tk()
-    self._mainForm = mainform.mainform(logging, master=root)
+    self._mainForm = mainform.mainform(master=root)
     #app = mainform(master=root)
     self._mainForm.mainloop()
-    #return
+
+
 
   def getServices(self):
     #read in the config file for the service list
