@@ -3,7 +3,7 @@ import datetime
 import sys
 import os
 import tkinter as tk
-import pcaps, networking, primer_engine, mainform
+import pcaps, networking, primer_engine, main_form
 
 class Primer():
   def __init__(self):
