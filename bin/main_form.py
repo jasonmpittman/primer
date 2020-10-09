@@ -3,18 +3,19 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 import os
-import testTools
-import primerFacade
+import test_tools
+import primer_facade
 import logging
-import primer_interface as primerInterface
+import primer
 
-class mainform(tk.Frame):
-  def __init__(self, master):
+class MainForm():
+  def __init__(self, master, primer_obj):
     super().__init__(master)
     self.master = master
     self.grid()
     self.create_widgets()
     self.logFile = ""
+    self.primer = primer_obj
     #self.logging = logging
 
 
@@ -23,7 +24,7 @@ class mainform(tk.Frame):
     self.title = tk.Label(master=self, text="Select a PCAP to run:", font='Helvetica 12 bold')
     self.title.grid(row=0, column=1)
     #get the dictionary of services --> pcaps
-    servicePcapMap = primerInterface.getServicePcapMap()
+    servicePcapMap = primer.getServicePcapMap()
 
 
     counter = 1
@@ -57,7 +58,7 @@ class mainform(tk.Frame):
     self.netiLabel = tk.Label(master=self, text="CONNECTION INTERFACE:", font='Helvetica 12 bold')
     self.netiLabel.grid(row=0, column=4)
 
-    interfaces_list = primerInterface.getInterfaceList()
+    interfaces_list = primer.getInterfaceList()
     interface = tk.StringVar()
     self.interfaceMenu = ttk.Combobox(master=self, textvariable=interface, values=interfaces_list)
     self.interfaceMenu.grid(row=1, column=4)
@@ -65,7 +66,7 @@ class mainform(tk.Frame):
     #create the run button
     self.run = tk.Button(self)
     self.run["text"] = "RUN"
-    self.run["command"] = primerInterface.handle_run()
+    self.run["command"] = primer.handle_run()
     self.run.grid(row=4, column=2)
 
     #create the add button
@@ -120,12 +121,12 @@ class mainform(tk.Frame):
     }
     selected.clear()
 
-    servicePcapMap = primerInterface.getServicePcapMap()
+    servicePcapMap = primer.getServicePcapMap()
     #retrieve info from fields
     honeypotIP = self.honeyPotEntry.get()
     interface = self.interfaceMenu.get()
 
-    success = primerInterface.runPcaps(servicePcapMap, honeypotIP, interface, self.selectedPcaps)
+    success = primer.runPcaps(servicePcapMap, honeypotIP, interface, self.selectedPcaps)
 
     #After running --> have a popup telling if it was successful or not
     if success:
