@@ -24,13 +24,12 @@ The user must install some python dependencies in order for primer to work effec
 These dependencies include:
 ```
 tkinter
-tcpreplay-edit
 getmac
 scapy
 ```
 For Ubuntu-based systems, one may install these dependencies by running the command: 
 ```
-sudo apt install -y python3-tk tcpreplay
+sudo apt install -y python3-tk
 sudo pip3 install getmac scapy
 ```
 
