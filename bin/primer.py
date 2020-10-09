@@ -44,5 +44,6 @@ class Primer():
     return
 
 
-primer = Primer()
-primer.main()
+if __name__ == "__main__":
+  primer = Primer()
+  primer.main()

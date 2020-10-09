@@ -10,9 +10,9 @@ import primer
 
 class MainForm():
   def __init__(self, master):
-    super().__init__(master)
+    #super().__init__(master)
     self.master = master
-    self.grid()
+    self.title.grid()
     self.create_widgets()
     self.logFile = ""
     #self.logging = logging
