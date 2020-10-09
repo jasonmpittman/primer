@@ -4,7 +4,6 @@ from tkinter import messagebox
 from tkinter import filedialog
 import os
 import test_tools
-import primer_facade
 import logging
 import primer
 
@@ -12,7 +11,7 @@ class MainForm():
   def __init__(self, master):
     #super().__init__(master)
     self.master = master
-    self.title.grid()
+    self.master.grid()
     self.create_widgets()
     self.logFile = ""
     #self.logging = logging

@@ -63,6 +63,12 @@ class PrimerEngine():
         return r[Ether].src
 
 
+
+  def run(self, pcap):
+    self.readPcap(pcap, self._networking.target_ip())
+    self.generate_packets()
+    
+
   def runPcaps(self, servicePcapMap, selectedPcaps):
     successFlag = True
     #get the current source IP from the testTools file
