@@ -9,13 +9,12 @@ import logging
 import primer
 
 class MainForm():
-  def __init__(self, master, primer_obj):
+  def __init__(self, master):
     super().__init__(master)
     self.master = master
     self.grid()
     self.create_widgets()
     self.logFile = ""
-    self.primer = primer_obj
     #self.logging = logging
 
 
