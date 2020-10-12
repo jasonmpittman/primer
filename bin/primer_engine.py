@@ -10,9 +10,10 @@ class PrimerEngine():
 
   @property
   def packets(self):
-    return self._Packets
+    return self._packets
 
   def _setPackets(self, value):
+    self._packets.clear()
     self._packets = value
 
   @property
@@ -32,24 +33,21 @@ class PrimerEngine():
     """
     self._networking.setHost_mac(Ether().src)
     self._networking.setTarget_ip(dst_ip) 
-    self._networking.setDestination_mac(get_dst_mac(new_dst_ip))
+    self._networking.setTarget_mac(self.get_dst_mac(self._networking.target_ip))
 
-    self._Packets = rdpcap(pcap)
+    self._setPackets(rdpcap(pcap))
 
-  def generate_packets():
-    for packet in self._Packets:
-        packet[Ether].src = self._networking.host_mac()
-        packet[Ether].dst = self._networking.target_mac()
-        packet[IP].src = self._networking.host_ip()
-        packet[IP].dst = self._networking.target_ip()
+  def generate_packets(self):
+    for packet in self.packets:
+        packet[Ether].src = self._networking.host_mac
+        packet[Ether].dst = self._networking.target_mac
+        packet[IP].src = self._networking.host_ip
+        packet[IP].dst = self._networking.target_ip
         del packet[IP].chksum 
+        
         sendp(packet)
 
-
-
-
-
-  def get_dst_mac(dst_ip):
+  def get_dst_mac(self, dst_ip):
     """
 
     Args:
@@ -62,13 +60,10 @@ class PrimerEngine():
         #print("{} {}".format(r[Ether].src,s[ARP].pdst))
         return r[Ether].src
 
-
-
   def run(self, pcap):
-    self.readPcap(pcap, self._networking.target_ip())
+    self.readPcap(pcap, self._networking.target_ip)
     self.generate_packets()
     
-
   def runPcaps(self, servicePcapMap, selectedPcaps):
     successFlag = True
     #get the current source IP from the testTools file

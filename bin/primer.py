@@ -52,12 +52,12 @@ class Primer():
     return pcaps
 
   def runPcaps(self, pcapName, honeypotIP, interface):
-      self.__networking.sourceIp.setHostIpRuntime(interface)
+      self.__networking.setHostIpRuntime(interface)
       self.__networking.setTarget_ip(honeypotIP)
       self.__primerEngine.run(pcapName)
 
   def getInterfaceList(self):
-      return primer.networking.interfaces()
+      return self.__networking.interfaces()
 
   def main(self):
     #gui setup
