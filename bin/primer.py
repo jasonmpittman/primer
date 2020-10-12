@@ -69,7 +69,8 @@ class Primer():
     #self.__mainForm.mainloop()
     #pcap file, honeypotIP, interface
     #Call run
-    if len(sys.argv) != 5:
+    print(len(sys.argv))
+    if len(sys.argv) != 4:
       print("Correct syntax: python3 primer.py <path topcap file name> <honeypot ip> <interface> ")
     else:
       self.runPcaps(sys.argv[1],sys.argv[2],sys.argv[3])
